@@ -391,10 +391,6 @@ python local_transcribe_summarize.py "https://www.youtube.com/watch?v=VIDEO_ID"
 python validate_ml_env.py
 ```
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🤝 Contributing
 
 1. Fork the repository
