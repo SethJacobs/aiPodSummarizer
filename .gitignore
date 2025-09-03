@@ -1,27 +1,53 @@
-# Node
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+.eggs/
+*.manifest
+*.spec
+*.db
+
+# Virtual envs
+venv/
+*/venv/
+.env/
+.env.*/
+.venv/
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+.jupyter/
+
+# Testing
+.pytest_cache/
+.coverage
+.tox/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# --- Node ---
 node_modules/
 npm-debug.log
 yarn-error.log
 pnpm-debug.log
 
-# Build
+# Build output
 dist/
 build/
 out/
 
-# IDEs/editors
+# --- Editors/IDEs ---
 .vscode/
 .idea/
 *.swp
 
-# OS files
+# --- OS ---
 .DS_Store
 Thumbs.db
-
-# Env / secrets
-.env
-.env.*
-
-# Python virtual envs
-venv/
-*/venv/
