@@ -21,3 +21,7 @@ Thumbs.db
 # Env / secrets
 .env
 .env.*
+
+# Python virtual envs
+venv/
+*/venv/
