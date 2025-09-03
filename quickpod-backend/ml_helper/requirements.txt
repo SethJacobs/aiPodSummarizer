@@ -1,0 +1,8 @@
+numpy>=1.21.0,<2.0.0
+openai-whisper>=20230314
+torch>=1.12.0
+transformers>=4.20.0
+sentencepiece
+tqdm
+ffmpeg-python
+packaging

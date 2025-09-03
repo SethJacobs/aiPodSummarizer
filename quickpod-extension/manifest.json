@@ -1,0 +1,44 @@
+{
+    "manifest_version": 3,
+    "name": "QuickPod – Podcast Summarizer (Local)",
+    "description": "One-click local summarizer that calls a local QuickPod backend for offline transcription & summarization.",
+    "version": "1.1.0",
+    "icons": {
+      "16": "assets/icon16.svg",
+      "48": "assets/icon48.svg",
+      "128": "assets/icon128.svg"
+    },
+    "action": {
+      "default_title": "QuickPod",
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    },
+    "options_page": "options.html",
+    "permissions": [
+      "storage",
+      "activeTab",
+      "scripting"
+    ],
+    "host_permissions": [
+      "https://*.youtube.com/*",
+      "https://open.spotify.com/*",
+      "https://podcasts.apple.com/*",
+      "http://localhost:8080/*"
+    ],
+    "content_scripts": [
+      {
+        "matches": [
+          "https://www.youtube.com/*",
+          "https://m.youtube.com/*",
+          "https://open.spotify.com/*",
+          "https://podcasts.apple.com/*"
+        ],
+        "js": ["content.js"],
+        "run_at": "document_idle"
+      }
+    ]
+  }
+  

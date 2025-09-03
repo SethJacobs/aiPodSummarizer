@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QuickPod</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <img src="assets/icon48.svg" alt="QuickPod" />
+      <h1>QuickPod</h1>
+    </header>
+
+    <section id="status">Detecting podcast page…</section>
+
+    <section id="summary" class="card hidden">
+      <h2>Summary</h2>
+      <div id="summary-content"></div>
+    </section>
+
+    <section id="transcript" class="card hidden">
+      <div class="tabs">
+        <button id="tab-summary" class="active">Summary</button>
+        <button id="tab-transcript">Full Transcript</button>
+      </div>
+      <div id="transcript-box" class="mono"></div>
+    </section>
+
+    <section id="sponsor" class="card hidden">
+      <h3>Sponsored</h3>
+      <div id="sponsor-box"></div>
+    </section>
+
+    <footer>
+      <a id="open-options" href="#">Options</a>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

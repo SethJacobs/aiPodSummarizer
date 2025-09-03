@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QuickPod Extension Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        #result { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+        pre { white-space: pre-wrap; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>QuickPod Extension Integration Test</h1>
+    
+    <div class="test-section">
+        <h2>Backend Connection Test</h2>
+        <button onclick="testBackendConnection()">Test Backend Connection</button>
+        <div id="connection-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Extension API Simulation</h2>
+        <p>Simulating what the extension would send to the backend:</p>
+        <button onclick="testExtensionAPI()">Test with YouTube URL</button>
+        <button onclick="testExtensionAPISpotify()">Test with Spotify URL</button>
+        <div id="api-result"></div>
+    </div>
+
+    <script>
+        async function testBackendConnection() {
+            const resultDiv = document.getElementById('connection-result');
+            resultDiv.innerHTML = 'Testing connection...';
+            
+            try {
+                const response = await fetch('http://localhost:8080/api/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `<div class="success">✅ Backend is reachable! Response: <pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Backend returned HTTP ${response.status}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Cannot connect to backend: ${error.message}</div>`;
+            }
+        }
+
+        async function testExtensionAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = 'Testing extension API simulation...';
+            
+            // Simulate what the extension would send
+            const extensionRequest = {
+                url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            };
+            
+            try {
+                const response = await fetch('http://localhost:8080/api/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(extensionRequest)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.ok) {
+                        resultDiv.innerHTML = `<div class="success">
+                            ✅ Extension API simulation successful!<br>
+                            <strong>Summary:</strong> ${data.summary}<br>
+                            <strong>Transcript length:</strong> ${data.transcript ? data.transcript.length : 0} characters<br>
+                            <strong>Bullets:</strong> ${data.bullets ? data.bullets.length : 0} items
+                        </div>`;
+                    } else {
+                        resultDiv.innerHTML = `<div class="error">❌ Backend error: ${data.error}</div>`;
+                    }
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ HTTP ${response.status}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Request failed: ${error.message}</div>`;
+            }
+        }
+
+        async function testExtensionAPISpotify() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = 'Testing with Spotify URL...';
+            
+            const extensionRequest = {
+                url: "https://open.spotify.com/episode/example"
+            };
+            
+            try {
+                const response = await fetch('http://localhost:8080/api/summarize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(extensionRequest)
+                });
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `<div class="success">
+                    Response for Spotify URL: <pre>${JSON.stringify(data, null, 2)}</pre>
+                </div>`;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Request failed: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
